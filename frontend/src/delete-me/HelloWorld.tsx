@@ -7,7 +7,11 @@ const HelloWorld = () => {
   return (
     <div>
       <h1>Hello world!</h1>
-      <Button onClick={() => setCount((count) => count + 1)}>
+      <Button
+        onClick={() => {
+          setCount((count) => count + 1)
+        }}
+      >
         You clicked {count} times
       </Button>
     </div>
