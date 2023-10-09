@@ -1,4 +1,5 @@
 # FinBuddy
+
 ## Getting Started
 
 - Running development server

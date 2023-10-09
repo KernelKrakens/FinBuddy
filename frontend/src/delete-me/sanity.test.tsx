@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
+import HelloWorld from '~/delete-me/HelloWorld'
 
-import HelloWorld from '@/delete-me/HelloWorld'
+// import HelloWorld from '~/delete-me/HelloWorld'
 
 describe('Testing whether vitest, RTL is working', () => {
   it('should pass 1 + 1 = 2', () => {

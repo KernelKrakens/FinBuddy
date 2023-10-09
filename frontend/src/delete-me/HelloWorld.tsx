@@ -1,5 +1,5 @@
-import { Button } from 'antd'
 import { useState } from 'react'
+import { Button } from '~/components/ui/button'
 
 const HelloWorld = () => {
   const [count, setCount] = useState(0)

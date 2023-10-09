@@ -1,10 +1,11 @@
 'use client'
 
-import { Button } from 'antd'
+import { Button } from '~/components/ui/button'
 
 const Home = () => (
   <div id="app">
-    <Button type="primary" className="bg-orange-500">
+    <Button>Default</Button>
+    <Button variant="outline" className="bg-orange-500 hover:bg-orange-400">
       Button
     </Button>
   </div>

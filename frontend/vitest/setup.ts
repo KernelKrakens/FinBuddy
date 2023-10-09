@@ -4,6 +4,7 @@ import { afterEach, expect } from 'vitest'
 
 type Matchers = typeof matchers
 declare module 'vitest' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Assertion extends Matchers {}
 }
 

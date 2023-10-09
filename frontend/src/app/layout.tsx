@@ -1,7 +1,8 @@
-import './globals.css'
+import '@total-typescript/ts-reset'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import '@total-typescript/ts-reset'
+
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
