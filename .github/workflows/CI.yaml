@@ -3,23 +3,42 @@ name: CI
 on:
   pull_request:
     branches:
-      - main  
+      - main
 
 jobs:
   flake8-lint:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8  
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-    - name: Install Flake8
-      run: pip install flake8 flake8-quotes
+      - name: Install Flake8
+        run: pip install flake8 flake8-quotes
 
-    - name: Run Flake8
-      run: flake8 ./  
+      - name: Run Flake8
+        run: flake8 ./
 
+  eslint-prettier-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      - name: ESLint and Prettier check
+        run: pnpm run ci

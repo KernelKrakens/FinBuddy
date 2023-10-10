@@ -34,9 +34,6 @@ dependencies:
     version: 1.0.7(tailwindcss@3.3.3)
 
 devDependencies:
-  '@kallechen/prettier-config':
-    specifier: ^1.0.0
-    version: 1.0.0
   '@testing-library/jest-dom':
     specifier: ^6.1.3
     version: 6.1.3(vitest@0.34.6)
@@ -622,10 +619,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
-
-  /@kallechen/prettier-config@1.0.0:
-    resolution: {integrity: sha512-cGNpcpusvu7+zpc2CYCcw1aDS5Afu9ucRsnFdNKPO8OYm5bCMyZ0W8WeX0y0vS7UX3281cA3holUEEDPL+fGhQ==}
-    dev: true
 
   /@next/env@13.5.4:
     resolution: {integrity: sha512-LGegJkMvRNw90WWphGJ3RMHMVplYcOfRWf2Be3td3sUa+1AaxmsYyANsA+znrGCBjXJNi4XAQlSoEfUxs/4kIQ==}

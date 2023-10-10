@@ -1,7 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const baseSetup = require('@kallechen/prettier-config')
-
 module.exports = {
-  ...baseSetup,
+  trailingComma: 'es5',
+  singleQuote: true,
+  printWidth: 80,
+  semi: false,
   plugins: ['prettier-plugin-tailwindcss'],
 }
