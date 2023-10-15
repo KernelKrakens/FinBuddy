@@ -44,6 +44,12 @@ pre-commit install # first use
 pre-commit install --overwrite
 ```
 
+#### Start development docker services
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
 #### Start docker services
 
 ```bash
@@ -66,4 +72,3 @@ pre-commit run
 
 - linter: flake8
 - formatter: black
-
