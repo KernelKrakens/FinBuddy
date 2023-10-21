@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build and run the Docker Compose stack
-        run: docker-compose up backend -d
-
+        run: docker-compose up -d backend
+ 
       - name: Run Django Tests
         run: docker-compose run backend python manage.py test

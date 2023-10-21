@@ -39,7 +39,7 @@ pre-commit install --overwrite
 #### Start development docker services
 
 ```bash
-docker compose -f docker-compose.dev.yml up --build
+docker compose up -d
 ```
 
 #### Start docker services
