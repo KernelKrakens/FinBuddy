@@ -4,16 +4,19 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError("Email field must be set")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save(using=self._db)
+        try:
+            user.full_clean()
+            user.save(using=self._db)
+        except ValidationError as e:
+            raise ValueError(e)
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
@@ -26,8 +29,8 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)  # type: ignore
+    is_staff = models.BooleanField(default=False)  # type: ignore
 
     objects = CustomUserManager()
 
