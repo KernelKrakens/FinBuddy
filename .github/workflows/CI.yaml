@@ -32,19 +32,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build and run the Docker Compose stack
-        run: docker-compose up -d
-      - name: Set up .env with GitHub Secrets
-        run: |
-          echo SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} >> .env
-          echo DEBUG=True >> .env
-          echo POSTGRES_DB=postgres >> .env
-          echo POSTGRES_USER=admin >> .env
-          echo POSTGRES_PASSWORD=admin >> .env
-          echo PGADMIN_DEFAULT_EMAIL=admin@example.com >> .env
-          echo PGADMIN_DEFAULT_PASSWORD=admin >> .env
-
-      - name: Build and run the Docker Compose stack
-        run: docker-compose up -d
+        run: docker-compose up backend -d
 
       - name: Run Django Tests
         run: docker-compose run backend python manage.py test
