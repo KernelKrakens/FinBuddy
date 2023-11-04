@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -22,3 +25,14 @@ jobs:
 
       - name: Run Flake8
         run: flake8 ./
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build and run the Docker Compose stack
+        run: docker-compose up -d backend
+ 
+      - name: Run Django Tests
+        run: docker-compose run backend python manage.py test

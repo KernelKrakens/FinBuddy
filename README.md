@@ -29,14 +29,6 @@ deactivate
 pip install -r backend/requirements.txt
 ```
 
-#### Setup environment variable
-
-```bash
-touch .env
-# COPY PAST from .env.example file
-# Ask for some variables
-```
-
 #### Setup pre-commit
 
 ```bash
@@ -47,14 +39,14 @@ pre-commit install --overwrite
 #### Start development docker services
 
 ```bash
-docker compose -f docker-compose.dev.yml up --build
+docker compose up -d
 ```
 
 #### Start docker services
 
 ```bash
-docker compose build
-docker compose up -d
+docker compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml up -d
 ```
 
 ## Linter & Formatter
