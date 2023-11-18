@@ -1,7 +1,7 @@
 from django.test import TestCase
 from .models import Transaction
 from users.models import CustomUser
-from category.models import Category
+from categories.models import Category
 from django.utils import timezone
 
 
