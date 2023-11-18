@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "graphene_django",
     "users",
+    "categories",
+    "transactions",
 ]
 
 MIDDLEWARE = [
