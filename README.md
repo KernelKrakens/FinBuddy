@@ -36,6 +36,12 @@ pre-commit install # first use
 pre-commit install --overwrite
 ```
 
+#### Setup env
+
+```bash
+copy .default.env .env
+```
+
 #### Start development docker services
 
 ```bash
@@ -64,3 +70,14 @@ pre-commit run
 
 - linter: flake8
 - formatter: black
+
+## Auth
+
+use JWT token
+
+put the below in header to get authed
+```
+{
+  "Authorization": "JWT ${token}"
+}
+```
