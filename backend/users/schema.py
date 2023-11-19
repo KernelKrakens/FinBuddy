@@ -3,8 +3,12 @@ from graphene_django import DjangoObjectType
 import graphql_jwt
 from graphql_jwt.shortcuts import get_token
 import requests
+from decouple import Config
 
 from .models import CustomUser
+
+
+config = Config(".env")
 
 
 # UserType definition
@@ -49,7 +53,7 @@ class GoogleLogin(graphene.Mutation):
             token_info = response.json()
 
             if not token_info.get("error"):
-                if token_info["aud"] == "your-google-client-id":
+                if token_info["aud"] == config("GOOGLE_OAUTH_CLIENT_ID"):
                     user_email = token_info["email"]
 
                     user, created = CustomUser.objects.get_or_create(email=user_email)
