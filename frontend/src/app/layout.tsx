@@ -2,6 +2,10 @@ import '@total-typescript/ts-reset'
 import type { Metadata } from 'next'
 
 import './globals.css'
+import { ApolloWrapper } from '~/app/ApolloWrapper'
+
+import { parsedEnv } from '~/lib/processEnv'
+console.log(parsedEnv)
 
 export const metadata: Metadata = {
   title: 'FinBuddy',
@@ -15,7 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body id="app">{children}</body>
+      <body id="app" className="container">
+        <ApolloWrapper>{children}</ApolloWrapper>
+      </body>
     </html>
   )
 }
