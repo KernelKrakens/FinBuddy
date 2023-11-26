@@ -10,9 +10,9 @@ class CategoryType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    all_categories = graphene.List(CategoryType)
+    categories = graphene.List(CategoryType)
 
-    def resolve_all_categories(self, info):
+    def resolve_categories(self, info):
         return Category.objects.all()
 
 

@@ -10,9 +10,9 @@ class TransactionType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    all_transactions = graphene.List(TransactionType)
+    transactions = graphene.List(TransactionType)
 
-    def resolve_all_transactions(self, info):
+    def resolve_transactions(self, info):
         return Transaction.objects.all()
 
 
