@@ -31,6 +31,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: Setup env
+        run: sh setup_env.sh
+
       - name: Build and run the Docker Compose stack
         run: docker-compose up -d backend
  

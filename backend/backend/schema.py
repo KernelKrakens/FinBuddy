@@ -6,4 +6,9 @@ class Query(users.schema.Query, graphene.ObjectType):
     pass
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(users.schema.Mutation, graphene.ObjectType):
+    # This will include all mutations from users.schema.Mutation
+    pass
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
