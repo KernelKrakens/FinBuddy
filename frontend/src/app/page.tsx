@@ -1,16 +1,7 @@
 'use client'
 
-import { Button } from '~/components/ui/button'
-
 const Home = () => {
-  return (
-    <div>
-      <Button>Default</Button>
-      <Button variant="outline" className="bg-orange-500 hover:bg-orange-400">
-        Button
-      </Button>
-    </div>
-  )
+  return <div className="my-2 flex flex-wrap gap-2"></div>
 }
 
 export default Home

@@ -1,12 +1,8 @@
 'use client'
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
+import { type ErrorProps } from '~/lib/types'
+
+export default function GlobalError({ error, reset }: ErrorProps) {
   console.error(error)
 
   return (
