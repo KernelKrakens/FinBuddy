@@ -11,7 +11,7 @@ import { parsedEnv } from '~/lib/processEnv'
 
 const makeClient = () => {
   const httpLink = new HttpLink({
-    uri: parsedEnv.BACKEND_URI,
+    uri: parsedEnv.BACKEND_URI + '/graphql/',
     fetchOptions: { cache: 'no-store' },
   })
 

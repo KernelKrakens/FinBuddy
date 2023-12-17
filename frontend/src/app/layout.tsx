@@ -4,9 +4,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { ApolloWrapper } from '~/app/ApolloWrapper'
 
-import { parsedEnv } from '~/lib/processEnv'
-console.log(parsedEnv)
-
 export const metadata: Metadata = {
   title: 'FinBuddy',
   description: 'A playground of Django and Next.js',
