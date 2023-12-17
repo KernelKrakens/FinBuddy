@@ -33,7 +33,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
     restart: always
-    command: yarn dev
+    command: > 
+      sh -c "yarn compile && 
+             yarn dev"
     env_file:
       - .env
     volumes:

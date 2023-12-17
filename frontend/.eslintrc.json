@@ -28,5 +28,5 @@
     ],
     "@typescript-eslint/consistent-type-definitions": ["warn", "type"]
   },
-  "ignorePatterns": ["next-env.d.ts", "src/components/ui"]
+  "ignorePatterns": ["next-env.d.ts", "src/components/ui", "src/__generated__"]
 }
