@@ -1,8 +1,15 @@
 import graphene
 import users.schema
+import categories.schema
+import transactions.schema
 
 
-class Query(users.schema.Query, graphene.ObjectType):
+class Query(
+    users.schema.Query,
+    categories.schema.Query,
+    transactions.schema.Query,
+    graphene.ObjectType,
+):
     pass
 
 
