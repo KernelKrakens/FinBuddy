@@ -33,15 +33,26 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
     restart: always
-    command: yarn dev
-    env_file:
-      - .env
     volumes:
       - ./frontend:/frontend
+    env_file:
+      - .env
     ports:
       - 4000:4000
     depends_on:
       - backend
+    command: >
+      sh -c "
+        if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+        elif [ -f package-lock.json ]; then npm ci; \
+        elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+        else echo 'Warning: Lockfile not found. It is recommended to commit lockfiles to version control.' && yarn install; \
+        fi &&
+        if [ -f yarn.lock ]; then yarn dev; \
+        elif [ -f package-lock.json ]; then npm run dev; \
+        elif [ -f pnpm-lock.yaml ]; then pnpm dev; \
+        else yarn dev; \
+        fi"
 
 volumes:
   postgres_data:
