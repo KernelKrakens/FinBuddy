@@ -48,15 +48,10 @@ services:
         elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
         else echo 'Warning: Lockfile not found. It is recommended to commit lockfiles to version control.' && yarn install; \
         fi &&
-        if [ -f yarn.lock ]; then NODE_ENV=development yarn compile; \
-        elif [ -f package-lock.json ]; then NODE_ENV=development npm run compile; \
-        elif [ -f pnpm-lock.yaml ]; then NODE_ENV=development pnpm compile; \
-        else NODE_ENV=development yarn compile; \
-        fi &&
-        if [ -f yarn.lock ]; then yarn dev; \
-        elif [ -f package-lock.json ]; then npm run dev; \
-        elif [ -f pnpm-lock.yaml ]; then pnpm dev; \
-        else yarn dev; \
+        if [ -f yarn.lock ]; then yarn local-dev; \
+        elif [ -f package-lock.json ]; then npm run local-dev; \
+        elif [ -f pnpm-lock.yaml ]; then pnpm local-dev; \
+        else yarn local-dev; \
         fi"
 
 volumes:
