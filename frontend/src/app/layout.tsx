@@ -2,6 +2,7 @@ import '@total-typescript/ts-reset'
 import type { Metadata } from 'next'
 
 import './globals.css'
+import './globalicons.css'
 import { ApolloWrapper } from '~/app/ApolloWrapper'
 
 export const metadata: Metadata = {
