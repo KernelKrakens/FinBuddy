@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import './globalicons.css'
 import { ApolloWrapper } from '~/app/ApolloWrapper'
+import Navbar from './Navbar'
 
 export const metadata: Metadata = {
   title: 'FinBuddy',
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body id="app" className="container">
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloWrapper>
+          <Navbar />
+          {children}
+        </ApolloWrapper>
       </body>
     </html>
   )
