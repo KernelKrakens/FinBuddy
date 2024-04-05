@@ -9,11 +9,18 @@ import GoogleIcon from '~/assets/google-logo.svg'
 
 type BasicFormProps = {
   isRegister?: boolean
+  errorMsg?: string | null
+  resetErrorMsg?: () => void
   handleSubmit: (email: string, password: string) => void
 }
 
 const BasicForm = (props: BasicFormProps): JSX.Element => {
-  const { isRegister = false, handleSubmit } = props
+  const {
+    isRegister = false,
+    handleSubmit,
+    errorMsg = null,
+    resetErrorMsg,
+  } = props
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const target = event.target as typeof event.target & {
@@ -52,6 +59,7 @@ const BasicForm = (props: BasicFormProps): JSX.Element => {
               required
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Email"
+              onChange={resetErrorMsg}
             />
           </div>
           <div>
@@ -63,6 +71,7 @@ const BasicForm = (props: BasicFormProps): JSX.Element => {
               required
               className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Password"
+              onChange={resetErrorMsg}
             />
           </div>
           {isRegister && (
@@ -95,6 +104,9 @@ const BasicForm = (props: BasicFormProps): JSX.Element => {
               {isRegister ? '註冊' : '登入'}
             </Button>
           </div>
+          {errorMsg !== null && (
+            <div className="text-center text-sm text-red-500">{errorMsg}</div>
+          )}
         </form>
         <div className="mt-6">
           <div className="relative">
