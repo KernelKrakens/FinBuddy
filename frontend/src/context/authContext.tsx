@@ -8,7 +8,7 @@ import {
   useCallback,
 } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMutation, useLazyQuery, useApolloClient } from '@apollo/client'
+import { useMutation, useApolloClient } from '@apollo/client'
 
 import { gql } from '~/__generated__/gql'
 import type { UserQuery } from '~/__generated__/graphql'
