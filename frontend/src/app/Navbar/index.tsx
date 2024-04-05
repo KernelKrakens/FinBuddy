@@ -17,7 +17,7 @@ const LINKS = [
 
 const Navbar = (): JSX.Element => {
   return (
-    <nav className="border-b-[1px] border-black">
+    <nav className="border-b-[1px] border-[#94A3B8]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="">
