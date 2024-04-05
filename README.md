@@ -1,5 +1,7 @@
 # FinBuddy
 
+personal financial management companion.
+
 ## Environment setup
 
 ### backend
@@ -76,8 +78,26 @@ pre-commit run
 use JWT token
 
 put the below in header to get authed
+
 ```
 {
   "Authorization": "JWT ${token}"
 }
 ```
+
+## Generating Fake Data
+
+To populate your local development environment with fake data, you can use the custom management commands.
+
+```bash
+docker-compose exec backend python manage.py generate_users <number_of_users> [--seed <seed_number>]
+
+docker-compose exec backend python manage.py generate_categories <number_of_transactions> [--seed <seed_number>]
+
+docker-compose exec backend python manage.py generate_transactions <number_of_transactions> [--seed <seed_number>]
+```
+
+- <number_of_users>: The number of fake users you want to create.
+- --seed <seed_number>: Optional. Use this to produce a consistent set of users for testing.
+
+--seed argument is particularly useful for creating predictable data for automated tests or when debugging specific scenarios.
