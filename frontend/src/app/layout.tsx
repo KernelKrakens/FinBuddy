@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import './globalicons.css'
 import { ApolloWrapper } from '~/app/ApolloWrapper'
-import Navbar from './Navbar'
+import Navbar from '~/components/layout/Navbar'
 
 export const metadata: Metadata = {
   title: 'FinBuddy',

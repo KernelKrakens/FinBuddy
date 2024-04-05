@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Image from 'next/image'
 
 import { Input } from '~/components/ui/input'
@@ -6,12 +7,20 @@ import { Button } from '~/components/ui/button'
 
 import GoogleIcon from '~/assets/google-logo.svg'
 
-const LoginForm = (): JSX.Element => {
+type BasicFormProps = {
+  isRegister?: boolean
+}
+
+const BasicForm = (props: BasicFormProps): JSX.Element => {
+  const { isRegister = false } = props
+
   return (
     <div className="flex justify-center">
       <div className="w-5/6 max-w-sm">
         <div>
-          <h2 className="mt-6 text-start text-3xl font-extrabold">會員登入</h2>
+          <h2 className="mt-6 text-start text-3xl font-extrabold">
+            {isRegister ? '會員註冊' : '會員登入'}
+          </h2>
         </div>
         <form className="space-y-6" action="#" method="POST">
           <div>
@@ -34,22 +43,39 @@ const LoginForm = (): JSX.Element => {
               id="password"
               name="password"
               type="password"
-              autoComplete="current-password"
               required
               className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="Password"
             />
           </div>
+          {isRegister && (
+            <div>
+              <Label htmlFor="confirm-password">確認密碼</Label>
+              <Input
+                id="confirm-password"
+                name="confirm-password"
+                type="password"
+                required
+                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                placeholder="Confirm Password"
+              />
+            </div>
+          )}
 
           <div className="flex flex-row justify-between">
-            <Button className="w-[45%] justify-center rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-              註冊
-            </Button>
+            <Link
+              href={isRegister ? '/login' : '/register'}
+              className="w-[45%]"
+            >
+              <Button className="w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                {isRegister ? '已有帳號？前往登入' : '註冊'}
+              </Button>
+            </Link>
             <Button
               type="submit"
               className="w-[45%] justify-center rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              登入
+              {isRegister ? '註冊' : '登入'}
             </Button>
           </div>
         </form>
@@ -81,4 +107,7 @@ const LoginForm = (): JSX.Element => {
   )
 }
 
-export default LoginForm
+export const LoginForm = BasicForm
+export const RegisterForm = (): JSX.Element => {
+  return <BasicForm isRegister={true} />
+}
