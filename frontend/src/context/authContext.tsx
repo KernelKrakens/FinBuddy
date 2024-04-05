@@ -99,20 +99,20 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   }, [loginData, loginLoading, loginError])
 
   const getUser = useCallback(async () => {
-  if (token !== null) {
-    try {
-      const { data } = await client.query({
-        query: USER_QUERY,
-        fetchPolicy: "network-only",
-      });
-      if (data?.userInfo !== null) {
-        setUser(data.userInfo);
+    if (token !== null) {
+      try {
+        const { data } = await client.query({
+          query: USER_QUERY,
+          fetchPolicy: 'network-only',
+        })
+        if (data?.userInfo !== null) {
+          setUser(data.userInfo)
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error)
       }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
     }
-  }
-}, [client, token]);
+  }, [client, token])
 
   useEffect(() => {
     getCredential()
