@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
 import { useAuth } from '~/context/authContext'
 import BasicForm from './BasicForm'
 
@@ -27,6 +29,28 @@ export const LoginForm = (): JSX.Element => {
   )
 }
 export const RegisterForm = (): JSX.Element => {
-  const handleSubmit = async (email: string, password: string) => {}
-  return <BasicForm isRegister={true} handleSubmit={handleSubmit} />
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const router = useRouter()
+
+  const { register } = useAuth()
+
+  const handleSubmit = async (email: string, password: string) => {
+    try {
+      await register(email, password)
+      router.push('/login')
+    } catch (error) {
+      console.error(error)
+      setErrorMsg('註冊失敗')
+    }
+  }
+  return (
+    <BasicForm
+      isRegister={true}
+      handleSubmit={handleSubmit}
+      errorMsg={errorMsg}
+      resetErrorMsg={() => {
+        setErrorMsg(null)
+      }}
+    />
+  )
 }

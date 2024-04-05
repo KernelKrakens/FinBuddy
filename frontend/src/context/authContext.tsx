@@ -8,18 +8,16 @@ import {
   useCallback,
 } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMutation, useLazyQuery } from '@apollo/client'
+import { useMutation, useLazyQuery, useApolloClient } from '@apollo/client'
 
 import { gql } from '~/__generated__/gql'
-
-type User = {
-  email: string
-}
+import type { UserQuery } from '~/__generated__/graphql'
 
 type AuthContextType = {
-  user: User | null
+  user: UserQuery['userInfo'] | null
   token: string | null
   login: (email: string, password: string) => Promise<void>
+  register: (email: string, password: string) => Promise<void>
   logout: () => void
 }
 
@@ -30,6 +28,17 @@ const LOGIN_MUTATION = gql(`
     }
   }
 `)
+
+const REGISTER_MUTATION = gql(`
+  mutation RegisterUser($email: String!, $password: String!) {
+    registerUser(email: $email, password: $password) {
+      user {
+        id
+      }
+    }
+  }
+`)
+
 const USER_QUERY = gql(`
   query User {
     userInfo {
@@ -41,30 +50,38 @@ const USER_QUERY = gql(`
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: React.PropsWithChildren) => {
+  const client = useApolloClient()
   const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
+  const [user, setUser] = useState<UserQuery['userInfo'] | null>(null)
 
   const [
-    mutateFunction,
+    loginMutateFunction,
     { data: loginData, loading: loginLoading, error: loginError },
   ] = useMutation(LOGIN_MUTATION)
-  const [
-    queryUser,
-    { data: userData, error: userError, loading: userLoading },
-  ] = useLazyQuery(USER_QUERY)
+  const [registerMutateFunction, { error: registerError }] =
+    useMutation(REGISTER_MUTATION)
 
   const login = async (email: string, password: string): Promise<void> => {
-    await mutateFunction({ variables: { email, password } })
+    await loginMutateFunction({ variables: { email, password } })
     if (loginError !== undefined) {
       throw new Error(loginError.message)
     }
   }
 
-  const logout = () => {
+  const register = async (email: string, password: string): Promise<void> => {
+    await registerMutateFunction({ variables: { email, password } })
+    if (registerError !== undefined) {
+      throw new Error(registerError.message)
+    }
+  }
+
+  const logout = async () => {
+    await client.resetStore()
+    await client.clearStore()
     localStorage.removeItem('token')
-    setUser(null)
     setToken(null)
+    setUser(null)
   }
 
   const getCredential = useCallback(() => {
@@ -81,10 +98,29 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     }
   }, [loginData, loginLoading, loginError])
 
-  // crendential check
+  const getUser = useCallback(async () => {
+  if (token !== null) {
+    try {
+      const { data } = await client.query({
+        query: USER_QUERY,
+        fetchPolicy: "network-only",
+      });
+      if (data?.userInfo !== null) {
+        setUser(data.userInfo);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+}, [client, token]);
+
   useEffect(() => {
     getCredential()
   }, [getCredential])
+
+  useEffect(() => {
+    void getUser()
+  }, [getUser])
 
   useEffect(() => {
     if (token !== null) {
@@ -94,20 +130,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     }
   }, [token, router])
 
-  useEffect(() => {
-    if (token !== null && user === null) {
-      void queryUser()
-    }
-  }, [token, queryUser, user])
-
-  useEffect(() => {
-    if (userData?.userInfo?.email !== undefined && user === null) {
-      setUser(userData.userInfo)
-    }
-  }, [userData, user])
-
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   )
