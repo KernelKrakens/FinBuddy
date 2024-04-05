@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import './globalicons.css'
 import { ApolloWrapper } from '~/app/ApolloWrapper'
+import { AuthProvider } from '~/context/authContext'
 import Navbar from '~/components/layout/Navbar'
 
 export const metadata: Metadata = {
@@ -20,8 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body id="app">
         <ApolloWrapper>
-          <Navbar />
-          {children}
+          <AuthProvider>
+            <Navbar />
+            {children}
+          </AuthProvider>
         </ApolloWrapper>
       </body>
     </html>
