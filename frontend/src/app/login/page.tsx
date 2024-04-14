@@ -6,7 +6,7 @@ import LoginLogo from '~/assets/login-logo.svg'
 
 const LoginPage = (): JSX.Element => {
   return (
-    <div className="main-content flex flex-row items-center justify-center">
+    <div className="flex grow flex-row items-center justify-center">
       <Image
         className="hidden w-1/2 md:block"
         src={LoginLogo}

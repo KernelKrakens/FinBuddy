@@ -22,8 +22,10 @@ export default function RootLayout({
       <body id="app">
         <ApolloWrapper>
           <AuthProvider>
-            <Navbar />
-            {children}
+            <div className="container flex min-h-screen flex-col">
+              <Navbar />
+              {children}
+            </div>
           </AuthProvider>
         </ApolloWrapper>
       </body>
