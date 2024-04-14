@@ -4,7 +4,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import './globalicons.css'
 import { ApolloWrapper } from '~/app/ApolloWrapper'
-import RestrictedPage from '~/components/wrapper/RestrictedPage'
 import { AuthProvider } from '~/context/authContext'
 import Navbar from '~/components/layout/Navbar'
 
@@ -24,7 +23,7 @@ export default function RootLayout({
         <ApolloWrapper>
           <AuthProvider>
             <Navbar />
-            <RestrictedPage>{children}</RestrictedPage>
+            {children}
           </AuthProvider>
         </ApolloWrapper>
       </body>

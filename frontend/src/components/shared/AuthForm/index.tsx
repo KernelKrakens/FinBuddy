@@ -12,6 +12,7 @@ export const LoginForm = (): JSX.Element => {
   const { setUpToken } = useAuth()
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const client = useApolloClient()
+  const router = useRouter()
 
   const handleSubmit = async (email: string, password: string) => {
     try {
@@ -24,6 +25,7 @@ export const LoginForm = (): JSX.Element => {
         setErrorMsg('登入失敗')
       } else if (data?.tokenAuth?.token !== undefined) {
         setUpToken(data.tokenAuth.token)
+        router.push('/')
       }
     } catch (error) {
       console.error(error)
