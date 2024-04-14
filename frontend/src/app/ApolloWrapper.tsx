@@ -8,6 +8,9 @@ import {
   NextSSRApolloClient,
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr'
+import Cookies from 'js-cookie'
+import cookie from 'cookie'
+
 import { parsedEnv } from '~/lib/processEnv'
 
 const makeClient = () => {
@@ -18,7 +21,14 @@ const makeClient = () => {
 
   const authLink = setContext((_, { headers }) => {
     const token =
-      typeof window !== 'undefined' ? localStorage.getItem('token') : null
+      typeof window !== 'undefined'
+        ? Cookies.get('token') ?? null
+        : typeof headers?.cookie === 'string' && headers.cookie.length > 0
+        ? cookie.parse(headers.cookie).token !== undefined &&
+          cookie.parse(headers.cookie).token !== ''
+          ? cookie.parse(headers.cookie).token
+          : null
+        : null
 
     return {
       headers: {

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, createContext, useContext, useState } from 'react'
+import Cookies from 'js-cookie'
 
 type AuthContextType = {
   token: string | null
@@ -14,17 +15,17 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const [token, setToken] = useState<string | null>(null)
 
   const setUpToken = (token: string) => {
-    localStorage.setItem('token', token)
+    Cookies.set('token', token, { expires: 7 })
     setToken(token)
   }
   const removeToken = () => {
-    localStorage.removeItem('token')
+    Cookies.remove('token')
     setToken(null)
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token !== null) {
+    const token = Cookies.get('token')
+    if (token !== undefined) {
       setToken(token)
     }
   }, [])

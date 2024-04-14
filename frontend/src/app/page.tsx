@@ -6,7 +6,9 @@ import { useAuth } from '~/context/authContext'
 import { USER_QUERY } from '~/graqhql/user'
 
 const Home = () => {
-  const { data } = useQuery(USER_QUERY)
+  const { data } = useQuery(USER_QUERY, {
+    fetchPolicy: 'cache-and-network',
+  })
   const { removeToken } = useAuth()
 
   return (
