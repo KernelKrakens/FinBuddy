@@ -13,8 +13,12 @@ class Query(
     pass
 
 
-class Mutation(users.schema.Mutation, graphene.ObjectType):
-    # This will include all mutations from users.schema.Mutation
+class Mutation(
+    users.schema.Mutation,
+    transactions.schema.Mutation,
+    categories.schema.Mutation,
+    graphene.ObjectType,
+):
     pass
 
 

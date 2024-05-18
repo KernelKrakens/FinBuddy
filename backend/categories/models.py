@@ -1,9 +1,9 @@
 from django.db import models
 
-
 CATEGORY_CHOICES = [
     ("income", "Income"),
     ("outcome", "Outcome"),
+    ("expense", "Expense"),
 ]
 
 
