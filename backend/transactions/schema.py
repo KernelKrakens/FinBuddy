@@ -3,8 +3,8 @@ from graphene_django import DjangoObjectType
 from graphql import GraphQLError
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Transaction
-from users.models import CustomUser
 from categories.models import Category
+from graphql_jwt.decorators import login_required
 
 
 class TransactionType(DjangoObjectType):
@@ -16,23 +16,24 @@ class TransactionType(DjangoObjectType):
 class Query(graphene.ObjectType):
     transactions = graphene.List(TransactionType)
 
+    @login_required
     def resolve_transactions(self, info):
-        return Transaction.objects.all()
+        user = info.context.user
+        return Transaction.objects.filter(user=user)
 
 
 class AddTransaction(graphene.Mutation):
     class Arguments:
         amount = graphene.Int(required=True)
-        user_id = graphene.ID(required=True)
         category_id = graphene.ID(required=True)
         date = graphene.DateTime(required=True)
 
     transaction = graphene.Field(TransactionType)
 
-    @classmethod
-    def mutate(cls, root, info, amount, user_id, category_id, date):
+    @login_required
+    def mutate(self, info, amount, category_id, date):
+        user = info.context.user
         try:
-            user = CustomUser.objects.get(pk=user_id)
             category = Category.objects.get(pk=category_id)
         except ObjectDoesNotExist as e:
             raise GraphQLError("An object does not exist with given ID: " + str(e))
@@ -53,12 +54,15 @@ class UpdateTransaction(graphene.Mutation):
 
     transaction = graphene.Field(TransactionType)
 
-    @classmethod
-    def mutate(cls, root, info, id, amount=None, category_id=None, date=None):
+    @login_required
+    def mutate(self, info, id, amount=None, category_id=None, date=None):
+        user = info.context.user
         try:
-            transaction = Transaction.objects.get(pk=id)
+            transaction = Transaction.objects.get(pk=id, user=user)
         except Transaction.DoesNotExist:
-            raise GraphQLError("No transaction found with the provided ID")
+            raise GraphQLError(
+                "No transaction found with the provided ID or insufficient permissions"
+            )
 
         if category_id is not None:
             try:
@@ -81,12 +85,15 @@ class DeleteTransaction(graphene.Mutation):
 
     success = graphene.Boolean()
 
-    @classmethod
-    def mutate(cls, root, info, id):
+    @login_required
+    def mutate(self, info, id):
+        user = info.context.user
         try:
-            transaction = Transaction.objects.get(pk=id)
+            transaction = Transaction.objects.get(pk=id, user=user)
         except Transaction.DoesNotExist:
-            raise GraphQLError("No transaction found with the provided ID")
+            raise GraphQLError(
+                "No transaction found with the provided ID or insufficient permissions"
+            )
 
         transaction.delete()
         return DeleteTransaction(success=True)
