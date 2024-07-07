@@ -2,7 +2,10 @@ import '@total-typescript/ts-reset'
 import type { Metadata } from 'next'
 
 import './globals.css'
+import './globalicons.css'
 import { ApolloWrapper } from '~/app/ApolloWrapper'
+import { AuthProvider } from '~/context/authContext'
+import Navbar from '~/components/layout/Navbar'
 
 export const metadata: Metadata = {
   title: 'FinBuddy',
@@ -16,8 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body id="app" className="container">
-        <ApolloWrapper>{children}</ApolloWrapper>
+      <body id="app">
+        <ApolloWrapper>
+          <AuthProvider>
+            <div className="container flex min-h-screen flex-col">
+              <Navbar />
+              {children}
+            </div>
+          </AuthProvider>
+        </ApolloWrapper>
       </body>
     </html>
   )
